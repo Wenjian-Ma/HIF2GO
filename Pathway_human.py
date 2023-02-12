@@ -40,7 +40,7 @@ prot_info_new = {}
 for i in prot_info.keys():
     if i in mapping.keys():
         prot_info_new[mapping[i]] = prot_info[i]
-#################################################################上边不要动
+#################################################################
 Diseases = []
 Tissue = []
 Pathway = []
@@ -52,7 +52,7 @@ Diseases_count = Counter(Diseases)#4167
 Tissue_count = Counter(Tissue)#3115
 Pathway_count = Counter(Pathway)#2167
 
-def filter(x,threshold):#根据阈值筛选
+def filter(x,threshold):
     count = 0
     term = []
     x = dict(x)
@@ -61,7 +61,7 @@ def filter(x,threshold):#根据阈值筛选
             count = count + 1
             term.append(i)
     return count,term
-#要缩小到一共1200dim
+
 num_disease,disease = filter(Diseases_count,10)
 num_tissue,tissue = filter(Tissue_count,10)
 num_pathway,pathway = filter(Pathway_count,30)
