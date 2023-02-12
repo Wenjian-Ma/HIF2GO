@@ -222,13 +222,13 @@ class GraphMAE(nn.Module):
     def encoding_mask_noise(self, adj, x, mask_rate):
         #对原始特征进行mask
         num_nodes = self.n_samples#全部结点数
-        perm = torch.randperm(num_nodes, device=x.device)#打乱顺序
-        num_mask_nodes = int(mask_rate * num_nodes)#掩码率×总结点数得到掩码结点的数量
+        perm = torch.randperm(num_nodes, device=x.device)
+        num_mask_nodes = int(mask_rate * num_nodes)
 
         # random masking
-        num_mask_nodes = int(mask_rate * num_nodes)#掩码率×总结点数得到掩码结点的数量
-        mask_nodes = perm[: num_mask_nodes]#哪些结点进行掩码
-        keep_nodes = perm[num_mask_nodes: ]#哪些结点特征不变（不掩码）
+        num_mask_nodes = int(mask_rate * num_nodes)
+        mask_nodes = perm[: num_mask_nodes]
+        keep_nodes = perm[num_mask_nodes: ]
 
         if self._replace_rate > 0:
             num_noise_nodes = int(self._replace_rate * num_mask_nodes)
@@ -238,14 +238,14 @@ class GraphMAE(nn.Module):
             noise_to_be_chosen = torch.randperm(num_nodes, device=x.device)[:num_noise_nodes]
 
             out_x = x.clone()
-            out_x[token_nodes] = 0.0#选中掩码的结点并特征归0
+            out_x[token_nodes] = 0.0
             out_x[noise_nodes] = x[noise_to_be_chosen]
         else:
             out_x = x.clone()
             token_nodes = mask_nodes
             out_x[mask_nodes] = 0.0
 
-        out_x[token_nodes] += self.enc_mask_token#掩码就是特征归0然后加上可学习参数？
+        out_x[token_nodes] += self.enc_mask_token
         use_g = adj.clone()
 
         return use_g, out_x, (mask_nodes, keep_nodes)
@@ -336,13 +336,13 @@ class ARGMA(nn.Module):
     def encoding_mask_noise(self, adj, x, mask_rate):
         #对原始特征进行mask
         num_nodes = self.n_samples#全部结点数
-        perm = torch.randperm(num_nodes, device=x.device)#打乱顺序
-        num_mask_nodes = int(mask_rate * num_nodes)#掩码率×总结点数得到掩码结点的数量
+        perm = torch.randperm(num_nodes, device=x.device)
+        num_mask_nodes = int(mask_rate * num_nodes)
 
         # random masking
-        num_mask_nodes = int(mask_rate * num_nodes)#掩码率×总结点数得到掩码结点的数量
-        mask_nodes = perm[: num_mask_nodes]#哪些结点进行掩码
-        keep_nodes = perm[num_mask_nodes: ]#哪些结点特征不变（不掩码）
+        num_mask_nodes = int(mask_rate * num_nodes)
+        mask_nodes = perm[: num_mask_nodes]
+        keep_nodes = perm[num_mask_nodes: ]
 
         if self._replace_rate > 0:
             num_noise_nodes = int(self._replace_rate * num_mask_nodes)
@@ -352,14 +352,14 @@ class ARGMA(nn.Module):
             noise_to_be_chosen = torch.randperm(num_nodes, device=x.device)[:num_noise_nodes]
 
             out_x = x.clone()
-            out_x[token_nodes] = 0.0#选中掩码的结点并特征归0
+            out_x[token_nodes] = 0.0
             out_x[noise_nodes] = x[noise_to_be_chosen]
         else:
             out_x = x.clone()
             token_nodes = mask_nodes
             out_x[mask_nodes] = 0.0
 
-        out_x[token_nodes] += self.enc_mask_token#掩码就是特征归0然后加上可学习参数？
+        out_x[token_nodes] += self.enc_mask_token
         use_g = adj.clone()
 
         return use_g, out_x, (mask_nodes, keep_nodes)
