@@ -125,7 +125,7 @@ if __name__ == "__main__":
     parser.add_argument('--lr', type=float, default=0.001, help="Initial learning rate.")
     parser.add_argument('--device', type=str, default=0, help="cuda device.")
     parser.add_argument('--fold', type=int, default=0, help="5 folds.")
-    parser.add_argument('--model', type=str, default='GraphMAE', help="model(GAE/GraphMAE).")
+    parser.add_argument('--model', type=str, default='GraphMAE', help="model(GraphMAE).")
     parser.add_argument('--epochs_ppi', type=int, default=140, help="Number of epochs to train ppi.")#200 for GAE/VGAE   140 for GraphMAE
     parser.add_argument('--epochs_simi', type=int, default=120, help="Number of epochs to train similarity network.")#75 for GAE/VGAE   120 for GraphMAE
     parser.add_argument('--thr_combined', type=float, default=0.0, help="threshold for combiend ppi network.")#0.3
