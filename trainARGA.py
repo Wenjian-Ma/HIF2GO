@@ -76,13 +76,9 @@ def train_ARGA(features, adj_train, args, graph_type,device):
             mask_optimizer.zero_grad()
         else:
             model_optimizer.zero_grad()
-        if args.model == 'GAE':
+        
 
-            z,output = model(adj_norm_dense,feature)
-
-            loss = BCELoss(torch.reshape(output,[1,-1]),torch.reshape(adj_label_dense,[1,-1]))
-
-        elif args.model == 'GraphMAE':
+        if args.model == 'GraphMAE':
 
             x_init, x_rec,z,z_with_mask,adj_rec = model(adj_norm_dense,feature)
 
