@@ -120,7 +120,7 @@ if __name__ == "__main__":
     parser.add_argument('--hidden1', type=int, default=800, help="Number of units in hidden layer 1.")
     parser.add_argument('--hidden2', type=int, default=400, help="Number of units in hidden layer 2.")
     parser.add_argument('--lr', type=float, default=0.001, help="Initial learning rate.")
-    parser.add_argument('--model', type=str, default='GraphMAE', help="model(GAE/GraphMAE).")
+    parser.add_argument('--model', type=str, default='GraphMAE', help="model(GraphMAE).")
     parser.add_argument('--epochs_ppi', type=int, default=140, help="Number of epochs to train ppi.")
     parser.add_argument('--epochs_simi', type=int, default=120, help="Number of epochs to train similarity network.")#75 for GAE   120 for GraphMAE
     parser.add_argument('--device', type=str, default='1', help="cuda device.")
