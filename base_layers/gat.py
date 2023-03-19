@@ -90,7 +90,7 @@ class GAT(nn.Module):
     #     return self.head(out)
 
     def forward(self, g, inputs, return_hidden=False):
-        h = inputs  # 掩码后的特征矩阵
+        h = inputs 
         hidden_list = []
         for l in range(self.num_layers):
             h = self.gat_layers[l](g, h)
@@ -222,8 +222,8 @@ class GATConv(nn.Module):
                         *dst_prefix_shape, self._num_heads, self._out_feats)
             else:
                 src_prefix_shape = dst_prefix_shape = feat.shape[:-1]
-                h_src = h_dst = self.feat_drop(feat)  # 特征矩阵加dropout
-                feat_src = feat_dst = self.fc(h_src).view(  # 特征矩阵放入全连接层且shape的512——>4，128
+                h_src = h_dst = self.feat_drop(feat)  
+                feat_src = feat_dst = self.fc(h_src).view( 
                     *src_prefix_shape, self._num_heads, self._out_feats)
                 if graph.is_block:
                     feat_dst = feat_src[:graph.number_of_dst_nodes()]
