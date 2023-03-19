@@ -39,10 +39,8 @@ def train_ARGA(features, adj_train, args, graph_type,device):
     features = sparse_to_tuple(features.tocoo())
     num_features = features[2][1]
     features_nonzero = features[1].shape[0]
-    if args.model == 'GAE':
-        model = GAE(num_features=num_features, num_nodes=num_nodes, features_nonzero=features_nonzero, hidden1=args.hidden1, hidden2=args.hidden2,device=device)
-
-    elif args.model == 'GraphMAE':
+    
+    if args.model == 'GraphMAE':
         model = GraphMAE(num_features=num_features, num_nodes=num_nodes, features_nonzero=features_nonzero, hidden1=args.hidden1, hidden2=args.hidden2,device=device,mask_rate=args.mask_rate,enc_type=args.enc_type,dec_type=args.dec_type)
     elif args.model == 'ARGMA':
         encoder = GCN_encoder(num_features, num_nodes, features_nonzero, args.hidden1, args.hidden2,device, dropout=0.0)
