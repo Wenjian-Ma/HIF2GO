@@ -64,44 +64,6 @@ class InnerProductDecoder(nn.Module):
 #         outputs = self.act(x)
 #         return outputs
 
-
-
-
-class GAE(nn.Module):
-    def __init__(self, num_features, num_nodes, features_nonzero, hidden1, hidden2,device, dropout=0.0, **kwargs):
-        super(GAE, self).__init__()
-
-        self.n_samples = num_nodes
-        self.hidden1_dim = hidden1
-        self.hidden2_dim = hidden2
-        self.input_dim = num_features
-        # self.adj = adj
-        # self.inputs = features
-        self.device = device
-        self.dropout = dropout
-        self.features_nonzero = features_nonzero
-
-
-        self.hidden1 = GraphConvolutionSparse(input_dim=self.input_dim,
-                                              output_dim=self.hidden1_dim,
-                                              features_nonzero=self.features_nonzero,
-                                              act=nn.ReLU(),
-                                              dropout=self.dropout)
-        self.hidden2 = GraphConvolution(input_dim=self.hidden1_dim,
-                                       output_dim=self.hidden2_dim,
-                                       act=lambda x: x,
-                                       dropout=self.dropout)
-
-        self.InnerProductDecoder = InnerProductDecoder(input_dim=self.hidden2_dim,act = lambda x: x)##decoder
-    def forward(self,adj,x):
-        x1 = self.hidden1(adj, x)
-
-        z = self.hidden2(adj,x1)
-
-        reconstructions = self.InnerProductDecoder(z)
-
-        return z,reconstructions
-
 ########################################the implementation of GraphMAE#############
 class GCN_encoder(nn.Module):
     def __init__(self,num_features, num_nodes, features_nonzero, hidden1, hidden2,device, dropout=0.0, **kwargs):
@@ -220,8 +182,8 @@ class GraphMAE(nn.Module):
         self.n_samples = num_nodes
 
     def encoding_mask_noise(self, adj, x, mask_rate):
-        #对原始特征进行mask
-        num_nodes = self.n_samples#全部结点数
+        
+        num_nodes = self.n_samples
         perm = torch.randperm(num_nodes, device=x.device)
         num_mask_nodes = int(mask_rate * num_nodes)
 
@@ -334,8 +296,8 @@ class ARGMA(nn.Module):
         return self.decoder(*args, **kwargs)
 
     def encoding_mask_noise(self, adj, x, mask_rate):
-        #对原始特征进行mask
-        num_nodes = self.n_samples#全部结点数
+        
+        num_nodes = self.n_samples
         perm = torch.randperm(num_nodes, device=x.device)
         num_mask_nodes = int(mask_rate * num_nodes)
 
