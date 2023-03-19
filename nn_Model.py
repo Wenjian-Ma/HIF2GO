@@ -2,7 +2,7 @@ import os
 #os.environ['CUDA_VISIBLE_DEVICES'] = '1,2,3,4,5,6,7'
 import torch.nn as nn
 import torch
-from GAE_model import GraphConvolution
+
 from torch.nn.parameter import Parameter
 class nnModel(nn.Module):
 
@@ -30,9 +30,6 @@ class nnModel(nn.Module):
 
         self.dense_lm2 = nn.Linear(512,400)#512
         ##################correlation#######################
-
-        self.GCN1 = GraphConvolution(200,200,act=lambda x: x)
-        self.GCN2 = GraphConvolution(200, 200, act=lambda x: x)
         self.emb1 = nn.Linear(num_labels,512)
         self.emb2 = nn.Linear(512, num_labels)
         self.num_labels = num_labels
